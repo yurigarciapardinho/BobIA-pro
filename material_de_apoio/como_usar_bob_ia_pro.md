@@ -31,7 +31,7 @@ Crie um arquivo `.env` na raiz do projeto com:
 p-----
 ```
 
-- `MINHA_CHAVE`: token para a biblioteca `@google/genai`.
+- `CHAVE`: token para a biblioteca `@google/genai`.
 - `PORTA`: porta onde a API ficará disponível (padrão: `3000`).
 
 5. Iniciar o servidor
