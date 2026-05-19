@@ -1,4 +1,4 @@
-# Como usar BobIA PRO
+
 
 # Como usar BobIA PRO
 
@@ -28,8 +28,7 @@ Este documento descreve como usar e operar o BobIA PRO (versão personalizada pe
 Crie um arquivo `.env` na raiz do projeto com:
 
 ```
-MINHA_CHAVE=seu_token_da_api
-PORTA=3000
+p-----
 ```
 
 - `MINHA_CHAVE`: token para a biblioteca `@google/genai`.

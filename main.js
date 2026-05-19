@@ -6,11 +6,11 @@ const fs = require("fs")
 require("dotenv").config()
 
 const app = express()
-const PORTA_SERVIDOR = process.env.PORTA //|| 3000
-const chatIA = new GoogleGenAI({ apiKey: process.env.MINHA_CHAVE })
+const PORTA_SERVIDOR = process.env.PORTA || 3000
+const chatIA = new GoogleGenAI({ apiKey: process.env.CHAVE })
 
 const urisDeContexto = []
-const extensoesPermitidas = ['.pdf', '.txt', '.md', '.csv']
+const extensoesPermitidas    = ['.pdf', '.txt', '.md', '.csv']
 
 app.use(express.json())
 app.use(express.static(path.join(__dirname, 'public')))
@@ -22,7 +22,7 @@ app.use((req, res, next) => {
 })
 
 async function inicializarFicheiros() {
-    console.info("A ler a pasta de ficheiros...")
+    console.info("Segura a emoção que vou ler a pasta de ficheiros...")
     const pastaFicheiros = path.join(__dirname, 'ficheiros')
 
     if (!fs.existsSync(pastaFicheiros)) {
@@ -82,7 +82,7 @@ async function gerarResposta(pergunta) {
             model: "gemini-2.5-flash",
             contents: conteudos,
             config: {
-                systemInstruction: "Você é um 'Nexalista' (especialista supremo e definitivo) em TI, Governança de TI (ITIL) e no ecossistema Atlassian (Jira Service Management, Jira Software). Seu tom deve ser altamente técnico, profissional e direto. REGRA INQUEBRÁVEL 1: Responda APENAS com base nos documentos fornecidos como contexto. REGRA INQUEBRÁVEL 2: Você deve se recusar categoricamente a responder a qualquer pergunta que não seja sobre Tecnologia da Informação, Governança ou Jira. Responda sempre em apenas um parágrafo.",
+                systemInstruction: "Você é um Especialista em TI, Governança de TI (ITIL) e no ecossistema Atlassian (Jira Service Management, Jira Software). Seu tom deve ser altamente técnico, profissional e direto. REGRA INQUEBRÁVEL 1: Responda APENAS com base nos documentos fornecidos como contexto. REGRA INQUEBRÁVEL 2: Você deve se recusar categoricamente a responder a qualquer pergunta que não seja sobre Tecnologia da Informação, Governança ou Jira. Responda sempre em apenas um parágrafo.",
                 temperature: 0.2,          // 0.0 a 0.2 factual, 0.3 a 0.6 equilibrado, 0.7 a 1.0 criativo
                 top_p: 0.95,               // 0.0 a 1.0: Controla a diversidade. Menor = palavras mais óbvias, Maior = vocabulário mais rico
                 top_k: 40,                 // 1 a 40+: Limita o banco de palavras da IA. Menos opções deixam a resposta mais rígida e focada
