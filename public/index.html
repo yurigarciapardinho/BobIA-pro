@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BobIA Palestra</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main class="conteudoPrincipal">
+        <section class="secaoBobIa">
+            <h1 class="tituloPrincipal">BobIA</h1>
+            <textarea id="inputPergunta" class="campoTexto" placeholder="Digite a pergunta para a Inteligência Artificial..."></textarea>
+            <br><br>
+            <button id="botaoGerar" class="botaoPrincipal" onclick="gerarResposta()">Gerar Resposta</button>
+            
+            <h3 class="subTitulo">Resposta da IA:</h3>
+            <div id="divResposta" class="caixaResposta"></div>
+        </section>
+    </main>
+
+    <script>
+        
+        function validacoes() {
+            const vetorErros = []
+            const perguntaInformada = inputPergunta.value.trim()
+
+            const perguntaVazia = perguntaInformada.length === 0
+
+            if (perguntaVazia) {
+                vetorErros.push('A pergunta não pode estar vazia. Digite algo.')
+            }
+
+            if (vetorErros.length > 0) {
+                alert(vetorErros.join('\n'))
+                return false
+            }
+
+            return true
+        }
+
+        async function gerarResposta() {
+            
+            const inputsValidos = validacoes()
+
+            if (!inputsValidos) {
+                return false
+            }
+
+            botaoGerar.classList.add('botaoBloqueado')
+            botaoGerar.innerText = 'Buscando resposta...'
+            botaoGerar.disabled = true
+
+            try {
+                const pergunta = inputPergunta.value
+
+                const response = await fetch('/perguntar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ pergunta })
+                })
+
+                const data = await response.json()
+
+                divResposta.style.display = 'block'
+                divResposta.innerText = data.resultado
+
+            } catch (erro) {
+                alert('Ocorreu um erro ao buscar a resposta da IA.')
+            } finally {
+                botaoGerar.classList.remove('botaoBloqueado')
+                botaoGerar.innerText = 'Gerar Resposta'
+                botaoGerar.disabled = false
+            }
+        }
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,74 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F0F5F1;
+    margin: 0;
+    padding: 0;
+}
+
+.conteudoPrincipal {
+    width: 80%;
+    margin: 50px auto;
+    text-align: center;
+}
+
+.secaoBobIa {
+    background-color: #FFFFFF;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border: 3px solid #006437;
+}
+
+.tituloPrincipal {
+    color: #006437;
+    font-size: 32px;
+}
+
+.subTitulo {
+    color: #CE2029;
+    margin-top: 30px;
+}
+
+.campoTexto {
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 80%;
+    min-height: 100px;
+    border: 2px solid #CCCCCC;
+    color: #1F2A44;
+}
+
+.botaoPrincipal {
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #006437;
+    color: #FFFFFF;
+    border: none;
+    font-weight: bold;
+}
+
+.botaoPrincipal:hover {
+    background-color: #004d2a;
+}
+
+.botaoBloqueado {
+    background-color: #808080 !important;
+    cursor: not-allowed !important;
+    color: #E0E0E0 !important;
+}
+
+.caixaResposta {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #F9F9F9;
+    border: 1px solid #006437;
+    text-align: left;
+    display: none;
+    font-size: 16px;
+    line-height: 150%;
+    color: #333333;
+}
