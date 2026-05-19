@@ -100,6 +100,15 @@ async function gerarResposta(pergunta) {
 
         return resposta
     } catch (error) {
+
+        if (error.message && error.message.includes('503')) {
+            console.warn('Aviso (503): O modelo da IA está com alta demanda. A requisição falhou, mas o servidor Node continua rodando.')
+            
+            return res.status(503).json({ 
+                resultado: "A inteligência artificial está com um pico de acessos neste momento. Por favor, aguarde alguns segundos e tente perguntar novamente." 
+            })
+        }
+
         console.error('Erro ao chamar o modelo:', error)
         throw error
     }
