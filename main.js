@@ -5,12 +5,20 @@ const fs = require("fs")
 
 require("dotenv").config()
 
+if (!process.env.CHAVE || process.env.CHAVE === 'Defina sua api key aqui') {
+    console.error('\x1b[31m%s\x1b[0m', ' ERRO FATAL: Chave da API do Google não encontrada ou inválida!')
+    console.error('Verifique se você renomeou o arquivo ".env.example" para ".env"')
+    console.error('e se colocou a sua chave real na variável CHAVE.')
+    process.exit(1) //Comando nativo do Node.js que assasina o processo.
+                    //parametro 0 = Saída normal, 1 ou maior = Saída com erro 
+}
+
 const app = express()
-const PORTA_SERVIDOR = process.env.PORTA || 3000
+const PORTA_SERVIDOR = Number(process.env.PORTA) || 3000
 const chatIA = new GoogleGenAI({ apiKey: process.env.CHAVE })
 
 const urisDeContexto = []
-const extensoesPermitidas    = ['.pdf', '.txt', '.md', '.csv']
+const extensoesPermitidas = ['.pdf', '.txt', '.md', '.csv']
 
 app.use(express.json())
 app.use(express.static(path.join(__dirname, 'public')))
@@ -59,7 +67,13 @@ app.post('/perguntar', async (req, res) => {
         const resultado = await gerarResposta(pergunta)
         res.json({ resultado })
     } catch (error) {
-        console.error('Erro ao gerar resposta:', error)
+        
+        if (error.message && error.message.includes('503')) {
+            return res.status(503).json({
+                resultado: 'A inteligência artificial está com alta demanda. Tente novamente em alguns segundos.'
+            })
+        }
+        
         res.status(500).json({ error: 'Erro interno do servidor' })
     }
 })
@@ -88,7 +102,7 @@ async function gerarResposta(pergunta) {
                 top_k: 40,                 // 1 a 40+: Limita o banco de palavras da IA. Menos opções deixam a resposta mais rígida e focada
                 max_output_tokens: 1000,   // Limite do tamanho da resposta (1000 tokens equivalem a +/-  750 palavras)
                 presence_penalty: 0.5,     // -2.0 a 2.0: Valores maiores que zero incentivam a IA a falar sobre assuntos novos
-                frequency_penalty: 0.0,    // -2.0 a 2.0: Valores maiores que zero evitam que a IA repita a mesma palavra várias vezes
+                frequency_penalty: 0.0,    // -2.0 a 2.0: Valores maiores que zero evitam que a IA repita a mesma palavra várias vezes 
             }
         })
 
@@ -103,21 +117,20 @@ async function gerarResposta(pergunta) {
 
         if (error.message && error.message.includes('503')) {
             console.warn('Aviso (503): O modelo da IA está com alta demanda. A requisição falhou, mas o servidor Node continua rodando.')
-            
-            return res.status(503).json({ 
-                resultado: "A inteligência artificial está com um pico de acessos neste momento. Por favor, aguarde alguns segundos e tente perguntar novamente." 
-            })
+        } else {
+            console.error('Erro ao chamar o modelo:', error)
         }
-
-        console.error('Erro ao chamar o modelo:', error)
+        
         throw error
     }
 }
 
-async function iniciarServidor() {
-    await inicializarFicheiros()
+async function iniciarServidor(porta = PORTA_SERVIDOR) {
+    if (porta === PORTA_SERVIDOR) {
+        await inicializarFicheiros()
+    }
     
-    app.listen(PORTA_SERVIDOR, () => {
+    const servidor = app.listen(porta, () => {
 console.info(
             `
             \x1b[92m██████╗  ██████╗ ██████╗ ██╗ █████╗     ██████╗ ██████╗  ██████╗
@@ -128,7 +141,16 @@ console.info(
             \x1b[94m╚═════╝  ╚═════╝ ╚═════╝ ╚═╝╚═╝  ╚═╝    ╚═╝     ╚═╝  ╚═╝ ╚═════╝\x1b[0m
             `
         )
-        console.info(`BobIA PRO iniciada em http://localhost:${PORTA_SERVIDOR} \n1SISA2026`)
+        console.info(`BobIA PRO iniciada em http://localhost:${porta} \n1SISA2026`)
+    })
+
+    servidor.on('error', (erro) => {
+        if (erro.code === 'EADDRINUSE') {
+            console.warn(`\n⚠️ A porta ${porta} já está em uso. Tentando iniciar na porta ${porta + 1}...`)
+            iniciarServidor(porta + 1)
+        } else {
+            console.error('Erro crítico ao iniciar o servidor:', erro)
+        }
     })
 }
 
