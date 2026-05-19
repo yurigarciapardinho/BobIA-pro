@@ -39,7 +39,8 @@ p-----
 No terminal:
 
 ```
-npm install
+# NÃO USAR NPM INSTALL
+npm ci 
 
 node main.js
 # ou
