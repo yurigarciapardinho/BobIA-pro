@@ -5,7 +5,11 @@ Este documento descreve como usar e operar o BobIA PRO (versão personalizada pe
 ## 1. Visão geral
 
 - BobIA é uma API que recebe perguntas via `POST /perguntar` e responde usando o modelo Gemini.
-- A aplicação carrega automaticamente ficheiros da pasta `ficheiros/` e os envia ao serviço de IA para uso em RAG (sendo os URIs injetados no prompt).
+- A aplicação carrega automaticamente arquivos da pasta `ficheiros/`, envia esses arquivos ao serviço de IA e injeta seus URIs no contexto da pergunta, permitindo que o modelo utilize esses documentos como apoio para gerar respostas.
+
+> **O que é URI neste projeto?**  
+> Quando um arquivo é enviado para o Gemini, o serviço devolve um identificador para esse arquivo. Esse identificador é chamado de URI.  
+> Na nossa versão do BobIA, o código usa esse URI para indicar ao Gemini quais arquivos devem ser considerados como contexto na hora de responder às perguntas.
 
 ## 2. Estrutura de pastas
 
