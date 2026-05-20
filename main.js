@@ -101,7 +101,7 @@ async function gerarResposta(pergunta) {
                 top_p: 0.95,               // 0.0 a 1.0: Controla a diversidade. Menor = palavras mais óbvias, Maior = vocabulário mais rico
                 top_k: 40,                 // 1 a 40+: Limita o banco de palavras da IA. Menos opções deixam a resposta mais rígida e focada
                 max_output_tokens: 1000,   // Limite do tamanho da resposta (1000 tokens equivalem a +/-  750 palavras)
-                presence_penalty: 0.5,     // -2.0 a 2.0: Valores maiores que zero incentivam a IA a falar sobre assuntos novos
+                presence_penalty: 0.5,     // -2.0 a 2.0: Valores maiores que zero induzem IA a falar sobre assuntos novos
                 frequency_penalty: 0.0,    // -2.0 a 2.0: Valores maiores que zero evitam que a IA repita a mesma palavra várias vezes 
             }
         })

@@ -91,7 +91,20 @@ Desenvolvedores do BobIA PRO (até 19/05/2026):
 
 - Yuri Garcia Pardinho (@yurigarciapardinho)
 
-## Notas finais
+
+## Fontes bibliográficas
+
+- [1] [NodeJs](https://nodejs.org/en)
+- [2] [NPM](https://docs.npmjs.com/)
+- [3] [Gemini](https://www.npmjs.com/package/@google/genai)
+- [4] [DotEnv](https://www.npmjs.com/package/dotenv)
+- [5] [Express](https://www.npmjs.com/package/express)
+- [6] [Get started with the Gemini API in Node.js applications](https://ai.google.dev/tutorials/get_started_node?hl=en)
+- [7] [Entendo parâmetros em LLM's](https://aviralrma.medium.com/understanding-llm-parameters-c2db4b07f0ee)
+- [8] [O que é NPM e como usar uma biblioteca instalada por ele](https://www.treinaweb.com.br/blog/o-que-e-npm-e-como-usar-uma-biblioteca-instalada-por-ele)
+
+
+## Notas finais 
 
 - Documento escrito para orientar o uso e manutenção do BobIA PRO.
 - Para dúvidas sobre contribuições ou processos internos, abra uma issue no repositório
