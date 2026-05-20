@@ -53,7 +53,7 @@
             botaoGerar.disabled = true
 
             try {
-                const pergunta = inputPergunta.value
+                const pergunta = inputPergunta.value.trim().toLowerCase()
 
                 const response = await fetch('/perguntar', {
                     method: 'POST',
@@ -63,13 +63,20 @@
                     body: JSON.stringify({ pergunta })
                 })
 
+                if(!response.ok) {
+                    const mensagemErro = data.resultado || data.error || 'Erro não mapeado. Culpe o Yuri e tente novamente mais tarde.'
+                    divResposta.innerText = mensagemErro
+                    return false
+                }
+
                 const data = await response.json()
 
-                divResposta.style.display = 'block'
-                divResposta.innerText = data.resultado
+                divResposta.innerText = data.resultado   
 
             } catch (erro) {
-                alert('Ocorreu um erro ao buscar a resposta da IA.')
+                divResposta.style.display = 'block'
+                divResposta.innerText = 'Não foi possível conectar ao servidor. Verifique se o BobIA PRO está rodando.'
+                console.error('Erro no frontend:', erro)
             } finally {
                 botaoGerar.classList.remove('botaoBloqueado')
                 botaoGerar.innerText = 'Gerar Resposta'
