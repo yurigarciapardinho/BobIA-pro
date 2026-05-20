@@ -102,6 +102,7 @@ Desenvolvedores do BobIA PRO (até 19/05/2026):
 - [6] [Get started with the Gemini API in Node.js applications](https://ai.google.dev/tutorials/get_started_node?hl=en)
 - [7] [Entendendo parâmetros em LLM's](https://aviralrma.medium.com/understanding-llm-parameters-c2db4b07f0ee)
 - [8] [O que é NPM e como usar uma biblioteca instalada por ele](https://www.treinaweb.com.br/blog/o-que-e-npm-e-como-usar-uma-biblioteca-instalada-por-ele)
+- [9] [Por que não usar npm install?](https://stackoverflow.com/q/48524417)
 
 
 ## Notas finais 
