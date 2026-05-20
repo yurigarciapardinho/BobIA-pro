@@ -63,6 +63,11 @@ async function inicializarFicheiros() {
 
 app.post('/perguntar', async (req, res) => {
     const pergunta = req.body.pergunta
+
+        if (!pergunta || typeof pergunta !== 'string' || pergunta.trim().length === 0) {
+    return res.status(400).json({ resultado: 'Pergunta inválida.' })
+    }
+
     try {
         const resultado = await gerarResposta(pergunta)
         res.json({ resultado })
